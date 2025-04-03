@@ -54,6 +54,10 @@ class Ball:
 class Block:
     def __init__(self, x, y):
         self.rect = pygame.Rect(x, y, 50, 20)
+    
+    def draw(self):
+        pygame.draw.rect(screen, BLUE, self.rect)
+
 
 
 
