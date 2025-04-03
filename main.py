@@ -51,5 +51,9 @@ class Ball:
     def draw(self):
         pygame.draw.ellipse(screen, BLUE, self.rect)
 
+class Block:
+    def __init__(self, x, y):
+        self.rect = pygame.Rect(x, y, 50, 20)
+
 
 
