@@ -26,3 +26,8 @@ class Paddle:
     
     def draw(self):
         pygame.draw.rect(screen, RED, self.rect)
+
+class Ball:
+    def __init__(self):
+        self.rect = pygame.Rect(WIDTH // 2 - 10, HEIGHT // 2, 20, 20)
+        self.speed = [4, -4]
