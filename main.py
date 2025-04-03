@@ -31,3 +31,11 @@ class Ball:
     def __init__(self):
         self.rect = pygame.Rect(WIDTH // 2 - 10, HEIGHT // 2, 20, 20)
         self.speed = [4, -4]
+    
+    def move(self):
+        self.rect.move_ip(self.speed)
+        if self.rect.left <= 0 or self.rect.right >= WIDTH:
+            self.speed[0] = -self.speed[0]
+        if self.rect.top <= 0:
+            self.speed[1] = -self.speed[1]
+
