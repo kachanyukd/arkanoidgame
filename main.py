@@ -58,6 +58,17 @@ class Block:
     def draw(self):
         pygame.draw.rect(screen, BLUE, self.rect)
 
+class Game:
+    def __init__(self):
+        self.paddle = Paddle()
+        self.ball = Ball()
+        self.blocks = [Block(100 + i * 60, 50 + j * 30) for i in range(10) for j in range(4)]
+        self.game_count = 0
+        self.start_time = 0
+        self.running = False
+        self.font = pygame.font.Font(None, 30)
+
+
 
 
 
