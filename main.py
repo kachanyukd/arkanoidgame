@@ -38,4 +38,14 @@ class Ball:
             self.speed[0] = -self.speed[0]
         if self.rect.top <= 0:
             self.speed[1] = -self.speed[1]
+    
+    def check_collision(self, paddle, blocks):
+        if self.rect.colliderect(paddle.rect):
+            self.speed[1] = -self.speed[1]
+        for block in blocks[:]:
+            if self.rect.colliderect(block.rect):
+                blocks.remove(block)
+                self.speed[1] = -self.speed[1]
+                break
+
 
