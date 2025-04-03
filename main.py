@@ -68,6 +68,13 @@ class Game:
         self.running = False
         self.font = pygame.font.Font(None, 30)
 
+    def reset(self):
+        self.ball = Ball()
+        self.blocks = [Block(100 + i * 60, 50 + j * 30) for i in range(10) for j in range(4)]
+        self.start_time = time.time()
+        self.game_count += 1
+
+
 
 
 
