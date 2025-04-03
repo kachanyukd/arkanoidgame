@@ -84,6 +84,9 @@ class Game:
         self.running = False
         self.font = pygame.font.Font(None, 30)
         self.history = self.load_history()
+        self.start_button = Button("START GAME", WIDTH // 2 - 150, HEIGHT // 2 - 120, 300, 80)
+        self.history_button = Button("GAME HISTORY", WIDTH // 2 - 150, HEIGHT // 2 - 20, 300, 80)
+        self.clear_history_button = Button("CLEAR HISTORY", WIDTH // 2 - 150, HEIGHT // 2 + 80, 300, 80)
         
     def load_history(self):
         try:
