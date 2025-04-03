@@ -83,6 +83,21 @@ class Game:
         self.start_time = 0
         self.running = False
         self.font = pygame.font.Font(None, 30)
+        self.history = self.load_history()
+        
+    def load_history(self):
+        try:
+            with open(HISTORY_FILE, "r") as file:
+                data = json.load(file)
+                if "games" not in data or "game_count" not in data:
+                    data = {"games": [], "game_count": 1}
+                return data
+        except (FileNotFoundError, json.JSONDecodeError):
+            return {"games": [], "game_count": 1}
+    
+    def save_history(self):
+        with open(HISTORY_FILE, "w") as file:
+            json.dump(self.history, file)
 
     def reset(self):
         self.ball = Ball()
