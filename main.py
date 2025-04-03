@@ -13,6 +13,23 @@ BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 HISTORY_FILE = "game_history.json"
 
+class Button:
+    def __init__(self, text, x, y, width, height, border_radius=20):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.text = text
+        self.font = pygame.font.Font(None, 40)
+        self.border_radius = border_radius
+    
+    def draw(self):
+        pygame.draw.rect(screen, YELLOW, self.rect, 0, border_radius=self.border_radius)
+        pygame.draw.rect(screen, BLACK, self.rect, 5, border_radius=self.border_radius)
+        text_surf = self.font.render(self.text, True, BLACK)
+        text_rect = text_surf.get_rect(center=self.rect.center)
+        screen.blit(text_surf, text_rect)
+    
+    def is_clicked(self, pos):
+        return self.rect.collidepoint(pos)
+
 class Paddle:
     def __init__(self):
         self.rect = pygame.Rect(WIDTH // 2 - 50, HEIGHT - 20, 100, 10)
