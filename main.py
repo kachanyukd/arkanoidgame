@@ -47,5 +47,9 @@ class Ball:
                 blocks.remove(block)
                 self.speed[1] = -self.speed[1]
                 break
+        
+    def draw(self):
+        pygame.draw.ellipse(screen, BLUE, self.rect)
+
 
 
