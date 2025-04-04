@@ -87,7 +87,7 @@ class Game:
         self.start_button = Button("START GAME", WIDTH // 2 - 150, HEIGHT // 2 - 120, 300, 80)
         self.history_button = Button("GAME HISTORY", WIDTH // 2 - 150, HEIGHT // 2 - 20, 300, 80)
         self.clear_history_button = Button("CLEAR HISTORY", WIDTH // 2 - 150, HEIGHT // 2 + 80, 300, 80)
-        
+
     def load_history(self):
         try:
             with open(HISTORY_FILE, "r") as file:
@@ -107,6 +107,19 @@ class Game:
         self.blocks = [Block(100 + i * 60, 50 + j * 30) for i in range(10) for j in range(4)]
         self.start_time = time.time()
         self.game_count += 1
+        
+    def show_history(self):
+        screen.fill(WHITE)
+        self.draw_gradient_background()  
+        y_offset = 50
+        title = self.font.render("Game History", True, BLACK)
+        screen.blit(title, (WIDTH // 2 - 60, 20))
+        for i, record in enumerate(self.history["games"]):
+            text = self.font.render(record, True, BLACK)
+            screen.blit(text, (50, y_offset + i * 30))
+        self.clear_history_button.draw()  
+        pygame.display.flip()
+        pygame.time.delay(2000)
 
     def run(self):
         going = True
