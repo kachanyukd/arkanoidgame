@@ -4,18 +4,16 @@ import json
 
 pygame.init()
 
-
-# Ініціалізація
-pygame.init()
-
-# Параметри вікна
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Arkanoid")
 
 WHITE = (255, 255, 255)
-BLUE = (0, 0, 255)
-RED = (255, 0, 0)
+YELLOW = (255, 223, 0)
+MAROON = (128, 0, 0)
+BLACK = (0, 0, 0)
+DARK_GREEN = (0, 100, 0)  
+DARK_BLUE = (0, 0, 139)
 HISTORY_FILE = "game_history.json"
 
 class Button:
@@ -26,9 +24,9 @@ class Button:
         self.border_radius = border_radius
     
     def draw(self):
-        pygame.draw.rect(screen, RED, self.rect, 0, border_radius=self.border_radius)
-        pygame.draw.rect(screen, BLUE, self.rect, 5, border_radius=self.border_radius)
-        text_surf = self.font.render(self.text, True, RED)
+        pygame.draw.rect(screen, YELLOW, self.rect, 0, border_radius=self.border_radius)
+        pygame.draw.rect(screen, BLACK, self.rect, 5, border_radius=self.border_radius)
+        text_surf = self.font.render(self.text, True, BLACK)
         text_rect = text_surf.get_rect(center=self.rect.center)
         screen.blit(text_surf, text_rect)
     
@@ -37,7 +35,8 @@ class Button:
 
 class Paddle:
     def __init__(self):
-        self.rect = pygame.Rect(WIDTH // 2 - 50, HEIGHT - 20, 100, 10)
+        self.rect = pygame.Rect(WIDTH // 2 - 75, HEIGHT - 20, 150, 20)  
+        self.border_radius = 15
     
     def move(self, keys):
         if keys[pygame.K_LEFT] and self.rect.left > 0:
@@ -46,7 +45,7 @@ class Paddle:
             self.rect.move_ip(6, 0)
     
     def draw(self):
-        pygame.draw.rect(screen, RED, self.rect)
+        pygame.draw.rect(screen, DARK_BLUE, self.rect, border_radius=self.border_radius)
 
 class Ball:
     def __init__(self):
@@ -70,14 +69,14 @@ class Ball:
                 break
         
     def draw(self):
-        pygame.draw.ellipse(screen, BLUE, self.rect)
+        pygame.draw.ellipse(screen, DARK_GREEN, self.rect) 
 
 class Block:
     def __init__(self, x, y):
         self.rect = pygame.Rect(x, y, 50, 20)
     
     def draw(self):
-        pygame.draw.rect(screen, BLUE, self.rect)
+        pygame.draw.rect(screen, YELLOW, self.rect)
 
 class Game:
     def __init__(self):
@@ -111,27 +110,35 @@ class Game:
         self.ball = Ball()
         self.blocks = [Block(100 + i * 60, 50 + j * 30) for i in range(10) for j in range(4)]
         self.start_time = time.time()
-        self.game_count += 1
+        self.history["game_count"] += 1
+        self.save_history()
         
     def show_history(self):
         screen.fill(WHITE)
+        self.draw_gradient_background()
         y_offset = 50
-        title = self.font.render("Game History", True, RED)
+        title = self.font.render("Game History", True, BLACK)
         screen.blit(title, (WIDTH // 2 - 60, 20))
         for i, record in enumerate(self.history["games"]):
-            text = self.font.render(record, True, RED)
+            text = self.font.render(record, True, BLACK)
             screen.blit(text, (50, y_offset + i * 30))
         self.clear_history_button.draw()  
         pygame.display.flip()
-        pygame.time.delay(2000)
+        pygame.time.delay(3000)
 
     def clear_history(self):
         self.history["games"] = []  
         self.history["game_count"] = 0
         self.save_history()
 
+    def draw_gradient_background(self):
+        for y in range(HEIGHT):
+            color = (255, int(160 - (160 * (y / HEIGHT))), 0)
+            pygame.draw.line(screen, color, (0, y), (WIDTH, y))
+
     def run(self):
         while True:
+            self.draw_gradient_background()
             self.start_button.draw()
             self.history_button.draw()
             pygame.display.flip()
@@ -151,6 +158,7 @@ class Game:
             
     def game_loop(self):
         while self.running:
+            self.draw_gradient_background()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.save_history()
@@ -180,7 +188,7 @@ class Game:
             
             elapsed_time = int(time.time() - self.start_time)
             info_text = f"Game: {self.history['game_count']} | Time: {elapsed_time}s"
-            text = self.font.render(info_text, True, RED)
+            text = self.font.render(info_text, True, BLACK)
 
             screen.blit(text, (10, 10))
             
@@ -190,4 +198,3 @@ class Game:
 if __name__ == "__main__":
     game = Game()
     game.run()
-
