@@ -4,6 +4,11 @@ import json
 
 pygame.init()
 
+
+# Ініціалізація
+pygame.init()
+
+# Параметри вікна
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Arkanoid")
@@ -176,6 +181,7 @@ class Game:
             elapsed_time = int(time.time() - self.start_time)
             info_text = f"Game: {self.history['game_count']} | Time: {elapsed_time}s"
             text = self.font.render(info_text, True, RED)
+
             screen.blit(text, (10, 10))
             
             pygame.display.flip()
@@ -184,3 +190,4 @@ class Game:
 if __name__ == "__main__":
     game = Game()
     game.run()
+
