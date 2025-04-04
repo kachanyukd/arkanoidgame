@@ -117,6 +117,7 @@ class Game:
         
     def show_history(self):
         screen.fill(WHITE)
+        self.draw_gradient_background()
         y_offset = 50
         title = self.font.render("Game History", True, BLACK)
         screen.blit(title, (WIDTH // 2 - 60, 20))
@@ -132,8 +133,14 @@ class Game:
         self.history["game_count"] = 0
         self.save_history()
 
+    def draw_gradient_background(self):
+        for y in range(HEIGHT):
+            color = (255, int(160 - (160 * (y / HEIGHT))), 0)
+            pygame.draw.line(screen, color, (0, y), (WIDTH, y))
+
     def run(self):
         while True:
+            self.draw_gradient_background()
             self.start_button.draw()
             self.history_button.draw()
             pygame.display.flip()
@@ -153,6 +160,7 @@ class Game:
             
     def game_loop(self):
         while self.running:
+            self.draw_gradient_background()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.save_history()
