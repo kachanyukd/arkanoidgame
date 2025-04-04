@@ -38,7 +38,8 @@ class Button:
 
 class Paddle:
     def __init__(self):
-        self.rect = pygame.Rect(WIDTH // 2 - 50, HEIGHT - 20, 100, 10)
+        self.rect = pygame.Rect(WIDTH // 2 - 75, HEIGHT - 20, 150, 20)  
+        self.border_radius = 15
     
     def move(self, keys):
         if keys[pygame.K_LEFT] and self.rect.left > 0:
@@ -47,7 +48,7 @@ class Paddle:
             self.rect.move_ip(6, 0)
     
     def draw(self):
-        pygame.draw.rect(screen, DARK_BLUE, self.rect)
+        pygame.draw.rect(screen, DARK_BLUE, self.rect, border_radius=self.border_radius)
 
 class Ball:
     def __init__(self):
