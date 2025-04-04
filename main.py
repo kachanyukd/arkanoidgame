@@ -72,7 +72,7 @@ class Ball:
                 break
         
     def draw(self):
-        pygame.draw.ellipse(screen, DARK_GREEN, self.rect)
+        pygame.draw.ellipse(screen, DARK_GREEN, self.rect) 
 
 class Block:
     def __init__(self, x, y):
