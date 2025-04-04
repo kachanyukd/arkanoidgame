@@ -113,7 +113,8 @@ class Game:
         self.ball = Ball()
         self.blocks = [Block(100 + i * 60, 50 + j * 30) for i in range(10) for j in range(4)]
         self.start_time = time.time()
-        self.game_count += 1
+        self.history["game_count"] += 1
+        self.save_history()
         
     def show_history(self):
         screen.fill(WHITE)
