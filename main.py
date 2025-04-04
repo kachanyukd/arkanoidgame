@@ -121,6 +121,11 @@ class Game:
         pygame.display.flip()
         pygame.time.delay(2000)
 
+    def clear_history(self):
+        self.history["games"] = []  
+        self.history["game_count"] = 0
+        self.save_history()
+
     def run(self):
         going = True
         while going:
