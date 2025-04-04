@@ -127,36 +127,37 @@ class Game:
         self.save_history()
 
     def run(self):
-        going = True
-        while going:
-            screen.fill(WHITE)
+        while True:
+            self.draw_gradient_background()
+            self.start_button.draw()
+            self.history_button.draw()
+            pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    going = False
-                if event.type == pygame.KEYDOWN and not self.running:
-                    self.running = True
-                    self.reset()
+                    self.save_history()
+                    return
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.start_button.is_clicked(event.pos):
+                        self.running = True
+                        self.reset()
+                        self.game_loop()
+                    elif self.history_button.is_clicked(event.pos):
+                        self.show_history()
+                    elif self.clear_history_button.is_clicked(event.pos):
+                        self.clear_history()
             
-            if self.running:
-                keys = pygame.key.get_pressed()
-                self.paddle.move(keys)
-                self.ball.move()
-                self.ball.check_collision(self.paddle, self.blocks)
-                if self.ball.rect.bottom >= HEIGHT or not self.blocks:
-                    self.running = False
+            #for block in self.blocks:
+             #   block.draw()
+            #self.paddle.draw()
+            #self.ball.draw()
             
-            for block in self.blocks:
-                block.draw()
-            self.paddle.draw()
-            self.ball.draw()
+            #elapsed_time = int(time.time() - self.start_time) if self.running else 0
+            #info_text = f"Game: {self.game_count} | Time: {elapsed_time}s"
+            #text = self.font.render(info_text, True, (0, 0, 0))
+            #screen.blit(text, (10, 10))
             
-            elapsed_time = int(time.time() - self.start_time) if self.running else 0
-            info_text = f"Game: {self.game_count} | Time: {elapsed_time}s"
-            text = self.font.render(info_text, True, (0, 0, 0))
-            screen.blit(text, (10, 10))
-            
-            pygame.display.flip()
-            pygame.time.delay(16)
+            #pygame.display.flip()
+            #pygame.time.delay(16)
         
         pygame.quit()
 
