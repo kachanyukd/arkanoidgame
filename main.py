@@ -124,7 +124,7 @@ class Game:
             screen.blit(text, (50, y_offset + i * 30))
         self.clear_history_button.draw()  
         pygame.display.flip()
-        pygame.time.delay(2000)
+        pygame.time.delay(3000)
 
     def clear_history(self):
         self.history["games"] = []  
