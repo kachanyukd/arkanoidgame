@@ -21,9 +21,9 @@ class Button:
         self.border_radius = border_radius
     
     def draw(self):
-        pygame.draw.rect(screen, YELLOW, self.rect, 0, border_radius=self.border_radius)
-        pygame.draw.rect(screen, BLACK, self.rect, 5, border_radius=self.border_radius)
-        text_surf = self.font.render(self.text, True, BLACK)
+        pygame.draw.rect(screen, RED, self.rect, 0, border_radius=self.border_radius)
+        pygame.draw.rect(screen, BLUE, self.rect, 5, border_radius=self.border_radius)
+        text_surf = self.font.render(self.text, True, RED)
         text_rect = text_surf.get_rect(center=self.rect.center)
         screen.blit(text_surf, text_rect)
     
@@ -110,12 +110,11 @@ class Game:
         
     def show_history(self):
         screen.fill(WHITE)
-        self.draw_gradient_background()  
         y_offset = 50
-        title = self.font.render("Game History", True, BLACK)
+        title = self.font.render("Game History", True, RED)
         screen.blit(title, (WIDTH // 2 - 60, 20))
         for i, record in enumerate(self.history["games"]):
-            text = self.font.render(record, True, BLACK)
+            text = self.font.render(record, True, RED)
             screen.blit(text, (50, y_offset + i * 30))
         self.clear_history_button.draw()  
         pygame.display.flip()
@@ -128,7 +127,6 @@ class Game:
 
     def run(self):
         while True:
-            self.draw_gradient_background()
             self.start_button.draw()
             self.history_button.draw()
             pygame.display.flip()
@@ -148,7 +146,6 @@ class Game:
             
     def game_loop(self):
         while self.running:
-            self.draw_gradient_background()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.save_history()
@@ -178,12 +175,12 @@ class Game:
             
             elapsed_time = int(time.time() - self.start_time)
             info_text = f"Game: {self.history['game_count']} | Time: {elapsed_time}s"
-            text = self.font.render(info_text, True, BLACK)
+            text = self.font.render(info_text, True, RED)
             screen.blit(text, (10, 10))
             
             pygame.display.flip()
             pygame.time.delay(16)
 
 if __name__ == "__main__":
-     game = Game()
-     game.run()
+    game = Game()
+    game.run()
