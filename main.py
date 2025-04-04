@@ -146,20 +146,43 @@ class Game:
                     elif self.clear_history_button.is_clicked(event.pos):
                         self.clear_history()
             
-            #for block in self.blocks:
-             #   block.draw()
-            #self.paddle.draw()
-            #self.ball.draw()
+    def game_loop(self):
+        while self.running:
+            self.draw_gradient_background()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.save_history()
+                    pygame.quit()
+                    exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.running = False
+                        return
             
-            #elapsed_time = int(time.time() - self.start_time) if self.running else 0
-            #info_text = f"Game: {self.game_count} | Time: {elapsed_time}s"
-            #text = self.font.render(info_text, True, (0, 0, 0))
-            #screen.blit(text, (10, 10))
+            keys = pygame.key.get_pressed()
+            self.paddle.move(keys)
+            self.ball.move()
+            self.ball.check_collision(self.paddle, self.blocks)
             
-            #pygame.display.flip()
-            #pygame.time.delay(16)
-        
-        pygame.quit()
+            if self.ball.rect.bottom >= HEIGHT or not self.blocks:
+                elapsed_time = int(time.time() - self.start_time)
+                self.history["games"].append(f"Game {self.history['game_count']}: {elapsed_time}s")
+                self.save_history()
+                self.running = False
+                return
+            
+            for block in self.blocks:
+                block.draw()
+            self.paddle.draw()
+            self.ball.draw()
+            
+            elapsed_time = int(time.time() - self.start_time)
+            info_text = f"Game: {self.history['game_count']} | Time: {elapsed_time}s"
+            text = self.font.render(info_text, True, BLACK)
+            screen.blit(text, (10, 10))
+            
+            pygame.display.flip()
+            pygame.time.delay(16)
 
 if __name__ == "__main__":
      game = Game()
